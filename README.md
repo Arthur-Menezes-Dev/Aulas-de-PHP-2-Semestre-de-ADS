@@ -305,6 +305,781 @@ Resumo das Aulas de php do segundo semestre da faculdade de analise e desenvolvi
 ```
 
 
+
+
+
+
+
+
+# PhP-Vetores
+Aula de PhP 16/10/2026 Sobre Vetores 
+
+## Vetor Básico com Numeros
+```php
+<?php
+	
+	$clima = []; // DEFINIDO COMO VETOR
+	$clima[0] = 25;
+	$clima[1] = 30;
+	$clima[2] = 28;
+	$clima[3] = 23;
+	$clima[4] = 10;
+	$clima[5] = 15;
+	$clima[6] = 26;
+
+
+	echo "Vetor: " . PHP_EOL;
+	echo "posição 0: " . $clima[0] . PHP_EOL;
+	echo "posição 1: " . $clima[1] . PHP_EOL;
+	echo "posição 2: " . $clima[2] . PHP_EOL;
+	echo "posição 3: " . $clima[3] . PHP_EOL;
+	echo "posição 4: " . $clima[4] . PHP_EOL;
+	echo "posição 5: " . $clima[5] . PHP_EOL;
+	echo "posição 6: " . $clima[6] . PHP_EOL;
+
+
+
+?>
+```
+
+## Vetor Básico com Palavras e Comando For e Foreach
+```php
+<?php
+	
+	$Produto = []; // DEFINIDO COMO VETOR
+	$Produto[0] = "Arroz";
+	$Produto[1] = "Feijão";
+	$Produto[2] = "Macarrão";
+	$Produto[3] = "Feijão de Corda";
+	$Produto[4] = "Batata";
+	$Produto[5] = "Salada";
+	$Produto[6] = "Picanha";
+
+	echo "Vetor: " . PHP_EOL;
+
+  // For
+
+  for($i=0;$i<7;$i++){
+		echo "Posição $i: " . $Produto[$i] . PHP_EOL;
+	}
+
+  echo "\n";
+
+  //Foreach
+
+	foreach($Produto as $p){
+		echo "Produto: " . $p . PHP_EOL;
+	}
+
+  /* Quando usar cada? A escrita do for é mais complexa que a do Foreach porem eu posso trabalhar com posição por posição de cada índice do vetor. O for conhece posição por posição do vetor
+     o Foreach é mais simples na escrita e sempre vai mostrar todos os itens do vetor. Porem ele não trabalha/ mostra posição por posição. Ele mostra todos de uma vez só. */
+
+?>
+```
+
+## Escrita Simplificada de Vetor
+```php
+<?php
+	
+	$Produto = ["Arroz","Feijão","Macarrão","Feijão de Corda","Batata","Salada","Picanha"]; // DEFINIDO COMO VETOR
+	
+	echo "Vetor: " . PHP_EOL;
+
+	for($i=0;$i<7;$i++){
+		echo "Posição $i: " . $Produto[$i] . PHP_EOL;
+	}
+
+	echo "\n";
+
+	foreach($Produto as $p){
+		echo "Produto: " . $p . PHP_EOL;
+	}
+
+?>
+```
+
+## Vetor Associativo
+```php
+<?php
+	
+	//VETOR ASSOCIATIVO (Chave e Valor)
+	$Produto = [
+		[
+		"Nome"=> "Arroz",
+		"Quantidade"=> 30
+		],
+		[
+		"Nome"=> "Feijão",
+		"Quantidade"=> 15
+		],
+		[
+		"Nome"=> "Macarrão",
+		"Quantidade"=> 10
+		]
+	];
+
+	foreach($Produto as $p){
+	echo "Nome do Produto: " . $p["Nome"] . PHP_EOL;
+ 	echo "Quantidade do Produto: " . $p["Quantidade"] . PHP_EOL;
+	echo "\n";
+	}
+
+/* Colocamos um vetor dentro do outro*/
+?>
+```
+
+## Vetores com objetos
+
+
+//São 6 arquivos HelloWorld.php e Produtos.php
+
+### Produtos.php
+```php
+<?php
+
+class Produto{
+	//PROPRIEDADES E ATRIBUTOS
+	private $nome;
+	private $quantidade;
+
+	//CONSTRUTOR
+	public function __construct ($nome, $quantidade){
+		$this->nome = $nome;
+		$this->quantidade = $quantidade;
+	}
+
+	//GETTERS 
+	public function getNome(){
+		return $this->nome;
+	}
+
+	public function getQuantidade(){
+		return $this->quantidade;
+	}
+}
+
+?>
+
+
+```
+###HelloWorld.php
+```php
+<?php
+
+	include "Produto.php";
+
+	$produtos = [	
+		new Produto("Arroz", 10),
+		new Produto("Feijão", 20),
+		new Produto("Macarrão", 1,),
+		new Produto("Batata", 30),
+	];
+
+	foreach($produtos as $p){
+		echo "Nome do Produto: " . $p->getNome() . PHP_EOL;
+		echo "Nome do Quantidade: " . $p->getQuantidade() . PHP_EOL;
+		echo "\n";
+	}
+
+?>
+```
+
+
+
+
+# Herança-no-PHP
+Aula do dia 14/10/2026 Sobre o conceito de herança na Programação Orientada a Objetos usando a linguagem PHP 
+
+São 6 arquivos
+
+HelloWorld.php
+Funcionario.php
+Vendedor.php
+VendedorNivel1.php
+VendedorNivel2.php
+VendedorNivel3.php
+Gerente.php
+
+## HelloWorld.php
+```php
+<?php
+   
+    include "Funcionario.php";
+    include "Vendedor.php";
+    include "VendedorNivel1.php";
+    include "VendedorNivel2.php";
+    include "VendedorNivel3.php";
+    include "Gerente.php";
+
+
+    $func = new Funcionario();
+    $func->setMatricula(1010);
+    $func->setNome("Pedro");
+    $func->setSalarioBruto(3000);
+
+
+    echo "*********** " . get_class($func) . " **************" .PHP_EOL;
+    echo "Matricula: " . $func->getMatricula() .PHP_EOL;
+    echo "Nome: " . $func->getNome() . PHP_EOL;
+    echo "Salário: " . $func->getSalarioBruto() . PHP_EOL;
+    echo "Bonificação (5%): " . $func->calcularBonificacao() . PHP_EOL;
+    echo "Salário + Bonificação: " . ($func->getSalarioBruto() + $func->calcularBonificacao() . PHP_EOL);
+
+
+    echo "\n";
+
+
+    $vendedor1 = new VendedorNivel1();
+    $vendedor1->setMatricula(2020);
+    $vendedor1->setNome("Francisca");
+    $vendedor1->setSalarioBruto(3000);
+
+
+    echo "*********** " . get_class($vendedor1) . " **************" .PHP_EOL;
+    echo "Matricula: " . $vendedor1->getMatricula() .PHP_EOL;
+    echo "Nome: " . $vendedor1->getNome() . PHP_EOL;
+    echo "Salário: " . $vendedor1->getSalarioBruto() . PHP_EOL;
+    echo "Bonificação (5%): " . $vendedor1->calcularBonificacao() . PHP_EOL;
+    echo "Comissão: " . $vendedor1->calcularComissao() .PHP_EOL;
+    echo "Salário + Bonificação + Comissão: " . ($vendedor1->getSalarioBruto() + $vendedor1->calcularBonificacao()  + $vendedor1->calcularComissao() . PHP_EOL);
+
+
+    echo "\n";
+
+
+    $vendedor2 = new VendedorNivel2();
+    $vendedor2->setMatricula(2021);
+    $vendedor2->setNome("Roberto");
+    $vendedor2->setSalarioBruto(3000);
+
+
+    echo "*********** " . get_class($vendedor2) . " **************" .PHP_EOL;
+    echo "Matricula: " . $vendedor2->getMatricula() .PHP_EOL;
+    echo "Nome: " . $vendedor2->getNome() . PHP_EOL;
+    echo "Salário: " . $vendedor2->getSalarioBruto() . PHP_EOL;
+    echo "Bonificação (5%): " . $vendedor2->calcularBonificacao() . PHP_EOL;
+    echo "Comissão: " . $vendedor2->calcularComissao() .PHP_EOL;
+    echo "Salário + Bonificação + Comissão: "  . ($vendedor2->getSalarioBruto() + $vendedor2->calcularBonificacao()  + $vendedor2  ->calcularComissao() . PHP_EOL);
+
+
+    echo "\n";
+
+
+    $vendedor3 = new VendedorNivel3();
+    $vendedor3->setMatricula(2022);
+    $vendedor3->setNome("Paula");
+    $vendedor3->setSalarioBruto(3000);
+
+
+    echo "*********** " . get_class($vendedor3) . " **************" .PHP_EOL;
+    echo "Matricula: " . $vendedor3->getMatricula() .PHP_EOL;
+    echo "Nome: " . $vendedor3->getNome() . PHP_EOL;
+    echo "Salário: " . $vendedor3->getSalarioBruto() . PHP_EOL;
+    echo "Bonificação (5%): " . $vendedor3->calcularBonificacao() . PHP_EOL;
+    echo "Comissão: " . $vendedor3->calcularComissao() .PHP_EOL;
+    echo "Salário + Bonificação + Comissão: " . ($vendedor3->getSalarioBruto() + $vendedor3->calcularBonificacao()  + $vendedor3  ->calcularComissao() . PHP_EOL);
+
+
+    echo "\n";
+
+
+    $gerente = new Gerente();
+    $gerente->setMatricula(2023);
+    $gerente->setNome("Sandra");
+    $gerente->setSalarioBruto(6500);
+
+
+    echo "*********** " . get_class($gerente) . " **************" .PHP_EOL;
+    echo "Matricula: " . $gerente->getMatricula() .PHP_EOL;
+    echo "Nome: " . $gerente->getNome() . PHP_EOL;
+    echo "Salário: " . $gerente->getSalarioBruto() . PHP_EOL;
+    echo "Bonificação (5%): " . $gerente->calcularBonificacao() . PHP_EOL;
+    echo "Comissão: " . $gerente->calcularComissao() .PHP_EOL;
+    echo "Salário + Bonificação + Comissão: " . ($gerente->getSalarioBruto() + $gerente->calcularBonificacao()  + $gerente->calcularComissao() . PHP_EOL);
+
+?>
+```
+## Funcionario.php
+
+```php
+<?php
+
+
+
+class Funcionario{
+
+
+    private $matricula;
+    private $nome;
+    private $salarioBruto;
+
+
+    public function calcularBonificacao(){
+        return $this->salarioBruto * 0.05;
+    }
+
+
+    public function getMatricula(){
+        return $this->matricula;
+    }
+
+
+    public function getNome(){
+        return $this->nome;
+    }
+
+
+    public function getSalarioBruto(){
+        return $this->salarioBruto;
+    }
+
+
+    public function setMatricula($matricula){
+        $this->matricula = $matricula;
+    }
+
+
+    public function setNome($nome){
+        $this->nome = $nome;
+    }
+
+
+    public function setSalarioBruto($salarioBruto){
+        $this->salarioBruto = $salarioBruto;
+    }
+
+
+}
+
+?>
+```
+
+## Vendedor.php
+
+```php
+<?php
+
+
+class Vendedor extends Funcionario{
+
+
+    public function calcularComissao(){
+        return 100000 * 0.006;
+    }
+
+
+}
+
+?>
+```
+
+## VendedorNivel1.php
+
+```php
+<?php
+
+
+class VendedorNivel1 extends Vendedor{
+   
+    public function calcularComissao(){
+        return 100000 * 0.01;
+    }
+
+
+}
+
+?>
+```
+
+## VendedorNivel2.php
+
+```php
+<?php
+
+
+class VendedorNivel2 extends Vendedor{
+   
+    public function calcularComissao(){
+        return 100000 * 0.006;
+    }
+
+
+}
+
+?>
+```
+
+## VendedorNivel3.php
+
+```php
+<?php
+
+
+class VendedorNivel3 extends Vendedor{
+
+
+    public function calcularComissao(){
+        return 100000 * 0.004;
+    }
+
+
+}
+
+?>
+```
+
+
+## Gerente.php
+
+```php
+<?php
+
+
+class Gerente extends Vendedor{
+
+
+    public function calcularComissao(){
+        return 300000 * 0.005;
+    }
+
+    	public function calcularBonificacao(){
+		return parent::calcularBonificacao() + 500;
+	}
+
+
+}
+?>
+```
+
+
+
+
+# Interfaces-PHP-
+Interfaces PHP Aula de 21/10/2026
+
+
+## Notificacao.PHP
+```php
+<?php
+
+interface Notificacao{
+
+	// metodos abstrato. (Não tem Implementação, Somente a assinatura do metodo.)
+	/*na interface não abrimos chaves nem implementamos nada.*/
+	public function enviarNotificacao($mensagem);
+	
+}
+
+?>
+```
+
+
+
+## Gerente.PHP
+
+```php
+<?php
+
+class Gerente extends Vendedor implements Notificacao{
+
+	public function calcularComissao(){
+		return 300000 * 0.005;
+	}
+
+	public function calcularBonificacao(){
+		return parent::calcularBonificacao() + 500;
+	}
+
+	public function enviarNotificacao($mensagem){
+
+		echo "Enviando email: " . $mensagem . PHP_EOL; 
+
+	}
+}
+// Aqui sim colocamos a abertura e fechamento de chaves e oque a função fará. 
+?>
+```
+
+
+## VendedorNivel1.PHP
+
+```php
+<?php
+
+include "Notificacao.php";
+
+class VendedorNivel1 extends Vendedor implements Notificacao{
+	
+	public function calcularComissao(){
+		return 100000 * 0.01;
+	}
+
+	public function enviarNotificacao($mensagem){
+		
+		echo "Enviando email: " . $mensagem . PHP_EOL; 
+
+	}
+
+}
+?>
+```
+
+## HelloWorld.PHP
+```php
+<?php
+	
+	include "Funcionario.php";
+	include "Vendedor.php";
+	include "VendedorNivel1.php";
+	include "VendedorNivel2.php";
+	include "VendedorNivel3.php";
+	include "Gerente.php";
+
+	$func = new Funcionario();
+	$func->setMatricula(1010);
+	$func->setNome("Pedro");
+	$func->setSalarioBruto(3000);
+
+	echo "*********** " . get_class($func) . " **************" .PHP_EOL;
+	echo "Matricula: " . $func->getMatricula() .PHP_EOL;
+	echo "Nome: " . $func->getNome() . PHP_EOL;
+	echo "Salário: " . $func->getSalarioBruto() . PHP_EOL;
+	echo "Bonificação (5%): " . $func->calcularBonificacao() . PHP_EOL;
+	echo "Salário + Bonificação: " . ($func->getSalarioBruto() + $func->calcularBonificacao() . PHP_EOL);
+
+	echo "\n";
+
+	$vendedor1 = new VendedorNivel1();
+	$vendedor1->setMatricula(2020);
+	$vendedor1->setNome("Francisca");
+	$vendedor1->setSalarioBruto(3000);
+
+	echo "*********** " . get_class($vendedor1) . " **************" .PHP_EOL;
+	echo "Matricula: " . $vendedor1->getMatricula() .PHP_EOL;
+	echo "Nome: " . $vendedor1->getNome() . PHP_EOL;
+	echo "Salário: " . $vendedor1->getSalarioBruto() . PHP_EOL;
+	echo "Bonificação (5%): " . $vendedor1->calcularBonificacao() . PHP_EOL;
+	echo "Comissão: " . $vendedor1->calcularComissao() .PHP_EOL;
+	echo "Salário + Bonificação + Comissão: " 
+	. ($vendedor1->getSalarioBruto() + $vendedor1->calcularBonificacao()  + $vendedor1->calcularComissao() . PHP_EOL);
+	$vendedor1->enviarNotificacao("Melhor Equipe de Vendas!!!!!!" . PHP_EOL);
+
+	echo "\n";
+
+	$vendedor2 = new VendedorNivel2();
+	$vendedor2->setMatricula(2021);
+	$vendedor2->setNome("Roberto");
+	$vendedor2->setSalarioBruto(3000);
+
+	echo "*********** " . get_class($vendedor2) . " **************" .PHP_EOL;
+	echo "Matricula: " . $vendedor2->getMatricula() .PHP_EOL;
+	echo "Nome: " . $vendedor2->getNome() . PHP_EOL;
+	echo "Salário: " . $vendedor2->getSalarioBruto() . PHP_EOL;
+	echo "Bonificação (5%): " . $vendedor2->calcularBonificacao() . PHP_EOL;
+	echo "Comissão: " . $vendedor2->calcularComissao() .PHP_EOL;
+	echo "Salário + Bonificação + Comissão: " 
+	. ($vendedor2->getSalarioBruto() + $vendedor2->calcularBonificacao()  + $vendedor2	->calcularComissao() . PHP_EOL);
+
+	echo "\n";
+
+	$vendedor3 = new VendedorNivel3();
+	$vendedor3->setMatricula(2022);
+	$vendedor3->setNome("Paula");
+	$vendedor3->setSalarioBruto(3000);
+
+	echo "*********** " . get_class($vendedor3) . " **************" .PHP_EOL;
+	echo "Matricula: " . $vendedor3->getMatricula() .PHP_EOL;
+	echo "Nome: " . $vendedor3->getNome() . PHP_EOL;
+	echo "Salário: " . $vendedor3->getSalarioBruto() . PHP_EOL;
+	echo "Bonificação (5%): " . $vendedor3->calcularBonificacao() . PHP_EOL;
+	echo "Comissão: " . $vendedor3->calcularComissao() .PHP_EOL;
+	echo "Salário + Bonificação + Comissão: " 
+	. ($vendedor3->getSalarioBruto() + $vendedor3->calcularBonificacao()  + $vendedor3	->calcularComissao() . PHP_EOL);
+
+	echo "\n";
+
+	$gerente = new Gerente();
+	$gerente->setMatricula(2023);
+	$gerente->setNome("Sandra");
+	$gerente->setSalarioBruto(6500);
+	
+
+	echo "*********** " . get_class($gerente) . " **************" .PHP_EOL;
+	echo "Matricula: " . $gerente->getMatricula() .PHP_EOL;
+	echo "Nome: " . $gerente->getNome() . PHP_EOL;
+	echo "Salário: " . $gerente->getSalarioBruto() . PHP_EOL;
+	echo "Bonificação (5%): " . $gerente->calcularBonificacao() . PHP_EOL;
+	echo "Comissão: " . $gerente->calcularComissao() .PHP_EOL;
+	echo "Salário + Bonificação + Comissão: " 
+	. ($gerente->getSalarioBruto() + $gerente->calcularBonificacao()  + $gerente->calcularComissao() . PHP_EOL);
+	$gerente->enviarNotificacao("VAMOS BATER A META DO MÊS !!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+
+?>
+```
+
+
+
+
+# php-na-rede-com-html
+Aula de 30/10/2026 integração do html com php
+
+## Usando Vs code e xampp no xampp apache ligado. online pesquise localhost/ o nome do seu arquivo. Se precisar misturar php com html vc deve colocar o arquivo como php. Ex: Arthur.php mesmop contendo o html nele tb. 
+
+index.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+
+    <h1>Uninove - Universidade Nove De Julho</h1>
+
+    <?php 
+        echo "<h2>Hoje estamos estudando PHP na Web</h2>" . "<br>";
+
+
+
+        $idade = 18;
+
+        if ($idade>=18){
+            echo "Pode votar" ."<br>";
+        } else {
+            echo "não pode votar" ."<br>";
+        }
+
+        for($i=0;$i<=10;$i++){
+            echo "valor da variavel i" .$i . "<br>";
+        }
+    ?>
+    
+
+</body>
+</html>
+
+## no vs code o PHP_EOL; não funciona. Só funciona o "<br>"
+
+
+header.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+indeex.php
+
+
+<?php include "header.php"; ?>
+<?php echo "<h1>Uninove - Universidade Nove De Julho</h1>"; ?>
+<?php include "footer.php"; ?>
+
+
+
+
+
+
+
+footer.php
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<?php
+
+namespace fornecedor_principal;
+
+class Produto{
+
+    public function mostrarDetalhes(){
+        echo "Detalhes do Produto do Fornecedor";
+    }
+}
+?>
+
+
+
+
+
+<?php
+
+namespace fornecedor_secundario;
+class Produto{
+
+    public function mostrarDetalhes(){
+        echo "Detalhes do Produto do Fornecedor2";
+    }
+}
+?>
+
+
+
+
+<?php 
+
+    require_once "header.php";
+    require_once "fornecedor1/produto.php";
+    require_once "fornecedor2/produto.php";
+
+    use fornecedor_principal\Produto;
+
+    echo "ola mundo" ."<br>";
+    $produto = new Produto();
+    $produto->mostrarDetalhes();
+
+    require_once "footer.php";
+
+    ?>
+
+
+
+
+
+
+
+
+
+    <?php 
+
+    require_once "header.php";
+    require_once "fornecedor1/produto.php";
+    require_once "fornecedor2/produto.php";
+
+
+    echo "ola mundo" ."<br>";
+    $produto = new fornecedor_principal\Produto();
+    $produto->mostrarDetalhes();
+
+    echo "ola mundo" ."<br>";
+    $produto = new fornecedor_secundario\Produto();
+    $produto->mostrarDetalhes();
+
+    require_once "footer.php";
+
+    ?>
+
+
+
+
 ## Design Patterns
 > Ver sobre o Design Patters (Gang of Four)
 > [Design Patterns na Alura](https://www.alura.com.br/artigos/design-patterns-introducao-padroes-projeto?srsltid=AU7gw4VD1Ery-D8wzwKZXlQWfwJ2qdacfoT_Dl4-J0jzgbf32MIhl0J9)
