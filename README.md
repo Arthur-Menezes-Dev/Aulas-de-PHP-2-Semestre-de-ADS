@@ -1058,7 +1058,7 @@ class Produto{
 
 
 
-    <?php 
+<?php 
 
     require_once "header.php";
     require_once "fornecedor1/produto.php";
@@ -1075,7 +1075,131 @@ class Produto{
 
     require_once "footer.php";
 
+?>
+
+
+# Aula 06/11/2026 MVC
+
+Php -> Controlador (Backend) Visão (Front-end) Modelo (Banco de dados) Saiba deles Caso haja problema no seu site, voce sabe onde corrigir. Isso é MVC 
+
+arquivos: index.php pasta: view -> arquivo: produto.php Pasta controler -> ProdutoControler.php arquivo:  Pasta: model-> arquivo:  listadeproduto.php
+
+## index.php
+
+<?php 
+
+    require_once "controler/ProdutoControler.php";
+
+    $controler = new ProdutoControler();
+    $controler->listaProdutos();
+
+
+
     ?>
+
+
+
+## produto.php
+
+<?php
+
+namespace model/produto.php ;
+
+class produto{
+    private $codigo;
+    private $produto;
+    private $precoUnitario;
+
+    public function __construct($codigo,$produto,$precoUnitario){
+        $this->codigo = $codigo;
+        $this->$produto = $produto;
+        $this->$precoUnitario = $precoUnitario;
+    }
+
+    public function getCodigo(){
+        return $this->codigo;
+    }
+
+    
+    public function getProduto(){
+        return $this->produto;
+    }
+
+    
+    public function getPrecoUnitario(){
+        return $this->precoUnitario;
+    }
+}
+
+?>
+
+
+
+
+
+
+## ProdutoControler.php
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+
+    <h1>Lista de Produtos</h1>
+
+    <table border="1" style="width: 50%;">
+
+        <thead>
+            <tr style="background-color: black;color: white;">
+                <th>Codigo</th>
+                <th>Produto</th>
+                <th>Preço Unitario</th>
+            </tr>
+        </theade>
+
+        <tbody>
+                <?php foreach($produtos as $produto): ?>
+                <tr>
+                    <td><?php echo $produto->getCodigo(); ?></td>
+                    <td><?php echo $produto->getProduto(); ?></</td>
+                    <td><?php echo $produto->getPrecoUnitario(); ?></</td>
+                </tr>
+                <?php endforeach; ?>
+        </tbody>
+    </table>
+    
+</body>
+</html>
+
+
+## listadeproduto.php
+
+<? 
+
+use \model\Produto;
+
+class PRodutoControler{
+
+    public function listarProdutos(){
+
+        $produtos = [
+            new Produto(1,"Produto A", 10.00),
+            new Produto(2,"Produto B", 15.50),
+            new Produto(3,"Produto C", 20.00),
+            new Produto(4,"Produto D", 40.00)
+        ];
+
+        include "view/listadeprodutos.php";
+
+    }
+
+}
 
 
 
