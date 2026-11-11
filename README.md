@@ -1203,6 +1203,11 @@ class PRodutoControler{
 
 
 
+# Aula do dia 11/11/2026
+
+
+
+
 
 ## Design Patterns
 > Ver sobre o Design Patters (Gang of Four)
