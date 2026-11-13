@@ -1207,6 +1207,162 @@ class PRodutoControler{
 ![Diagrama de Sequencia](DiagramaDeSequencia.png)
 
 
+# Aula do dia 13/11/2026 Conectando o PHP ao Banco de Dados e a Tela
+
+Aquivos 
+index.php, produto.php, listadeprodutos.php e ProdutoControler.php
+
+## No Banco de Dados
+
+CREATE DATABASE Produtodb; 
+
+USE Produtodb;
+
+CREATE TABLE Produtotb(
+	codigo INT PRIMARY KEY AUTO_INCREMENT ,
+    produto VARCHAR(30),
+    preco_unitario FLOAT
+);
+
+INSERT INTO Produtotb(produto,preco_unitario) VALUES('Arroz', 5);
+INSERT INTO Produtotb(produto,preco_unitario) VALUES('Feijão', 7);
+INSERT INTO Produtotb(produto,preco_unitario) VALUES('Óleo', 8);
+INSERT INTO Produtotb(produto,preco_unitario) VALUES('Macarrão',4);
+
+SELECT * FROM Produtotb;
+
+DROP TABLE Produtotb;
+
+
+## index.php
+
+<?php 
+
+    require_once "controler/ProdutoControler.php";
+
+    $controler = new ProdutoControler();
+    $controler->listarProdutos();
+
+?>
+
+
+## produto.php
+
+
+<?php
+
+namespace model;
+
+use \PDO; /**\ é oque conecta no bd */
+
+class Produto{
+    private $codigo;
+    private $produto;
+    private $precoUnitario;
+
+    public function __construct($codigo,$produto,$precoUnitario){
+        $this->codigo = $codigo;
+        $this->produto = $produto;
+        $this->precoUnitario = $precoUnitario;
+    }
+
+    public function getCodigo(){
+        return $this->codigo;
+    }
+
+    
+    public function getProduto(){
+        return $this->produto;
+    }
+
+    
+    public function getPrecoUnitario(){
+        return $this->precoUnitario;
+    }
+
+    public function buscarTodosProdutos(){
+        //CONEXÃO DP BANCO DE DADOS 
+        $pdo = new PDO('mysql:host=localhost;dbname=produtodb','root','uninove'); /* o \ é oque conecta no bd. O pdo é do php ele que cham o banco de dados. LocalHost é pq tá na minha maquina. dbname é o nome da database, root é o nome do usuario e uninove é a senha*/
+       
+
+        $statement = $pdo->query('SELECT * FROM Produtotb'); /*Statement é uma linha de instrução o statement recebe os dados do banco de dados e retorna pro controlador.*/ 
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC); /*Ele retorna a Info. Esse é o mvc. Ele separa as reponsabilidades de cada. View, Controller e Model. FE BE e BD */
+    }
+}
+
+?>
+
+
+## listadeprodutos.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+
+<?php /*
+    echo "<pre>" . print_r($produto, true) . "<pre>";*/
+?>
+
+
+
+    <h1>Lista de Produtos</h1>
+
+    <a href="index.php?acao=paginacadastrar"><button>Cadastrar Produto</button></a><br><br>
+
+    <table border="1" style="width: 50%;">
+
+        <thead>
+            <tr style="background-color: black;color: white;">
+                <th>Codigo</th>
+                <th>Produto</th>
+                <th>Preço Unitario</th>
+                <th colspan="2">Ação</th> <!--O colspan deixa o espaço para 2 colunas como uma. Um titlulo pra 2 colunas na table em html-->
+            </tr>
+        </theade>
+
+        <tbody>
+                <?php  foreach($produtos as $produto): ?>
+                <tr>
+                    <td><?php  echo $produto['codigo']; ?></td>
+                    <td><?php  echo $produto['produto'] ?></</td>
+                    <td><?php  echo "R$ " . number_format($produto['preco_unitario'],2,',','.'); ?></</td>
+                    <td><a href="#">ALTERAR</a></td>
+                    <td><a href="#">EXCLUIR</a></td>
+                </tr> 
+                <?php endforeach; ?> 
+        </tbody>
+    </table>
+                
+</body>
+</html>
+
+
+## ProdutoControler.php
+
+<?php
+
+require_once "model/Produto.php";
+
+use \model\Produto;
+
+class ProdutoControler{
+
+    public function listarProdutos(){
+
+        $produto = new Produto(null,null,null);
+        $produtos = $produto->buscarTodosProdutos();
+
+        include "view/listadeprodutos.php";
+
+    }
+
+}
 
 
 ## Design Patterns
